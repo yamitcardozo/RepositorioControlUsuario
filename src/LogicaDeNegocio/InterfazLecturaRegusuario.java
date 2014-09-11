@@ -5,11 +5,13 @@
 
 package LogicaDeNegocio;
 
+import ControlException.ExceptionFlujo;
+
 /**
  *
  * @author Administrator2
  */
 public interface InterfazLecturaRegusuario {
 
-    public String  leerRegUsuario();
+    public String  leerRegUsuario() throws  ExceptionFlujo;
 }

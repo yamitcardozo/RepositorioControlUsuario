@@ -21,7 +21,7 @@ public class impleLecturaRegUsuario implements InterfazLecturaRegusuario {
     /**
      * leer la informacion del servidor por intermedio de un socket
      */
-    public String leerRegUsuario()   {
+    public String leerRegUsuario() throws ExceptionFlujo  {
         DataOutputStream dos;
         Socket sk;
         DataInputStream dis;
@@ -43,7 +43,7 @@ public class impleLecturaRegUsuario implements InterfazLecturaRegusuario {
             sk.close();
 
         } catch (Exception ex) {
-            new ExceptionFlujo(ex);
+            throw new ExceptionFlujo(ex);
         }
       
         return respuesta;

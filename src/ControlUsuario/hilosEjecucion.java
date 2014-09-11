@@ -6,9 +6,11 @@
 package ControlUsuario;
 
 import AccesoDatos.impleLecturaRegUsuario;
+import ControlException.ExceptionFlujo;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -31,9 +33,9 @@ public class hilosEjecucion extends Thread {
     }
 
     @Override
-    public void run() {
-        
-        usServicio = new userServicio();
+    public void run()  {
+        try {
+            usServicio = new userServicio();
 //        SocketControl s = new SocketControl();
 //        Flujos f = new Flujos();
 //
@@ -61,11 +63,13 @@ public class hilosEjecucion extends Thread {
 //            e.printStackTrace();
 //            //Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-
-        iml = new impleLecturaRegUsuario();
-        String  d = iml.leerRegUsuario();
-        usServicio.asignacionAtributos(d);
-        log.info("envio de usuario existente en el sistema" + d);
+            iml = new impleLecturaRegUsuario();
+            String d = iml.leerRegUsuario();
+            usServicio.asignacionAtributos(d);
+            log.info("envio de usuario existente en el sistema" + d);
+        } catch (ExceptionFlujo ex) {
+             new ExceptionFlujo(ex);
+        }
     }
 
          /*long minPrime;

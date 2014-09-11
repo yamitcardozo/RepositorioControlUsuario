@@ -17,7 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import org.jvnet.substance.SubstanceLookAndFeel;
 //import org.uispec4j.Button;
 //import org.uispec4j.TextBox;
 //import org.uispec4j.Window;
@@ -92,24 +92,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(140, 140, 140)
+                .add(32, 32, 32)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(lblUsuario)
                     .add(lblContraseña))
                 .add(28, 28, 28)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(tpwPassword, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
-                    .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 224, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(176, Short.MAX_VALUE))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(293, Short.MAX_VALUE)
-                .add(btnEnviar)
-                .add(268, 268, 268))
+                    .add(btnEnviar)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                        .add(tpwPassword)
+                        .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(111, 111, 111)
+                .add(57, 57, 57)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(lblUsuario)
                     .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -117,9 +115,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(lblContraseña)
                     .add(tpwPassword, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(48, 48, 48)
+                .add(35, 35, 35)
                 .add(btnEnviar)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
 
         pack();
@@ -185,6 +183,35 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     * @param args the command line arguments
     */
     public static void main(String args[]) {
+        try
+            {
+                JFrame.setDefaultLookAndFeelDecorated(true);
+                JDialog.setDefaultLookAndFeelDecorated(true);
+              // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+               // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+               // UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");      no encontro libreria
+                //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                   //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+                 // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");  no encontro libreria
+                    //UIManager.setLookAndFeel( "com.apple.laf.AquaLookAndFeel");   no encontro libreria
+                   // UIManager.setLookAndFeel(  "com.sun.java.swing.plaf.mac.MacLookAndFeel");  no encontro libreria
+                       //     UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+//                    UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+                //UIManager.setLookAndFeel(" org.jvnet.substance.skin.CremeSkin");
+                //SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.CremeCoffeeSkin");
+                UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
+
+                   
+
+
+
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new VentanaPrincipal().setVisible(true);
