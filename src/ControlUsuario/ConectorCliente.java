@@ -5,9 +5,10 @@
 
 package ControlUsuario;
 
+import ControlException.ExceptionFlujo;
+import Entidades.Usuario;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 
 
 
@@ -16,8 +17,16 @@ import org.apache.log4j.PropertyConfigurator;
  * @author Administrator2
  */
 public class ConectorCliente {
-
+    /**
+     *  log para almacenar informacion de errores
+     */
     private Logger log = Logger.getLogger(ConectorCliente.class);
+    Usuario usuario;
+
+    public ConectorCliente (Usuario usuario)
+    {
+        this.usuario = usuario;
+    }
 /**
  * Iniciar el hilo(Thread) con tiempo estimado con las excepciones propias de este,
  * IllegalArgumentException, InterruptedException
@@ -27,7 +36,7 @@ public void iniciar(){
       ArrayList<Thread> clients = new ArrayList<Thread>();
         log.info("metodo iniciar de la clase ConectorCliente");
         for(int i=0; i < 1; i++) {
-            clients.add(new hilosEjecucion(i));
+//            clients.add(new hilosEjecucion(i,usuario));
         }
         for (Thread thread : clients)  {
             try
@@ -35,14 +44,11 @@ public void iniciar(){
               thread.sleep(5000);
               thread.start();
             }
-            catch(IllegalArgumentException e)
+            catch(Exception e)
             {
-                log.error(e.getMessage());
+                new ExceptionFlujo(e);
             }
-             catch(InterruptedException e)
-            {
-                log.error(e.getMessage());
-            }     
+                
             
         }
 }

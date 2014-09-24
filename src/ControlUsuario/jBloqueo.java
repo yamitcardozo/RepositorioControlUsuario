@@ -37,7 +37,7 @@ public class jBloqueo {
         scheduler.scheduleAtFixedRate(
             new Runnable()
             {
-               // @Override
+                @Override
                 public void run() {
                     front();
                 }
@@ -49,7 +49,7 @@ public class jBloqueo {
  */
     public void front()
     {
-        //jframe.setExtendedState( JFrame.MAXIMIZED_BOTH );//maximizado
-        //jframe.toFront();
+        jframe.setExtendedState( JFrame.MAXIMIZED_BOTH );//maximizado
+        jframe.toFront();
     }
 }

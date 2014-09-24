@@ -16,8 +16,8 @@ public class principal2 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        ConectorCliente c = new ConectorCliente();
-        c.iniciar();
+//        ConectorCliente c = new ConectorCliente();
+//        c.iniciar();
          // hilosEjecucion hilo = new hilosEjecucion(1);
           //hilosEjecucion hilo1 = new hilosEjecucion(2);
 

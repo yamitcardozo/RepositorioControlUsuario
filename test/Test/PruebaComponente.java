@@ -12,10 +12,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.uispec4j.Button;
-import org.uispec4j.TextBox;
-import org.uispec4j.UISpec4J;
-import org.uispec4j.Window;
+//import org.uispec4j.Button;
+//import org.uispec4j.TextBox;
+//import org.uispec4j.UISpec4J;
+//import org.uispec4j.Window;
 
 /**
  *
@@ -64,7 +64,7 @@ public class PruebaComponente {
 //         assertEquals("5", entry.getText());
 //    }
      static {
-      UISpec4J.init();
+     // UISpec4J.init();
     }
     @Test
     public void testSomething() {

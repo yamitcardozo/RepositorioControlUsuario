@@ -1,0 +1,34 @@
+-Cambio userServicio metodo donde se asigne los valores de set y get, y retorna tipo de operacion.
+- en recibir mensaje y enviar mensaje  se debe tener en cuenta los tipos de operaciones.
+Usuario.
+idUsuario   (identificador de usuario)
+Contrase�a 
+primerNombre  
+PrimerApellido  
+
+RegUsuario 
+IdComputadora Computadora
+estado del prestamo lo evalue el administrador
+Computador
+idComputador
+
+ideas
+- hacerlo con una clase que contenga un boton y que cuando se presione el boton
+se pueda  enviar el mensaje. se traslado la creacion del socket a la clase
+SesionUsuario donde esta el boton.
+- para la creación de chat se necesita esperar el mensaje del servidor administrador,
+tambien se destruye ventana de chat cuando el servidor administrador envie mensaje,
+se debe poner a esperar al usuario en un ciclo infinito, el boton de action deberia funcionar
+independiente.
+- los componentes de Jswing se manejan con hilos de ejecución, Background: procesos
+o rutinas que se utilizan en segundo plano.
+En la construccion de un Jframe el no sale del contructor hasta realizar una
+nueva accion.
+En un DataInputStream espera con readUTF a que haya algun dato en el flujo
+*faltante : solo mostrar unjtext a la vez
+* Se deben colocar ip validas para no tardar en tiempo de conexion
+*revisar la forma de hacer el jframe GrdBad
+*para poder seguir en ejecucion despues de estar para do esperando
+por el mensaje se debe colocar el metodo estatico y ser ejecutado en el main,
+buscar funcionamiento del metodo main. repasar el parametro static que
+funcionalidades le da al programa

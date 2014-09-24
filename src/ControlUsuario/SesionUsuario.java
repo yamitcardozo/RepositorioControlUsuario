@@ -11,18 +11,129 @@
 
 package ControlUsuario;
 
+import ControlException.ExceptionFlujo;
+import Entidades.Usuario;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.net.Socket;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import org.apache.log4j.Logger;
 
 /**
  *
- * @author Administrator2
+ * @author Yamit Cardozo
  */
-public class SesionUsuario extends javax.swing.JFrame {
+public class SesionUsuario extends javax.swing.JFrame implements ActionListener{
+
+    /**
+     *  log para almacenar informacion de errores
+     */
+    private Logger log = Logger.getLogger(ConectorCliente.class);
+    Usuario usuario;
+     /**
+     *  socket para hacer la comunicacion de cliente servidor
+     */
+    protected Socket sk;
+
+    private final GridBagConstraints constraints;
+    private final JButton apagar, cerrarCesion,reiniciar;
 
     /** Creates new form SesionUsuario */
-    public SesionUsuario() {
-                initComponents();
+
+    public JButton boton(String subtitulo)
+    {
+        JButton b = new JButton(subtitulo);
+        b.setActionCommand(subtitulo);
+        b.addActionListener(this);
+        getContentPane().add(b, constraints);
+        return b;
+
+
+
     }
+
+    public SesionUsuario() {
+
+
+        super("SesionUsuario");
+
+        getContentPane().setLayout(new GridBagLayout());
+        constraints = new GridBagConstraints();
+        constraints.insets = new Insets(3, 10, 3, 10);
+
+        cerrarCesion = boton("cerrarSesion");
+        apagar = boton("apagar");
+        reiniciar = boton("reiniciar");
+
+          this.setBounds(1000, 0, 350, 80);
+          this.setResizable(false); // Evita que se pueda estirar la ventana
+          this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Deshabilita el boton de cierre de la ventana
+          this.setVisible(true);
+//                initComponents();
+//
+//                this.setBounds(1000, 0, 350, 80);
+//                 this.setResizable(false); // Evita que se pueda estirar la ventana
+//                this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); // Deshabilita el boton de cierre de la ventana
+//                 this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                 this.setVisible(true);
+
+                 
+//                this.usuario = usuario;
+//                 try {
+//            sk = new Socket("192.168.1.146", 10578);
+//        } catch (Exception ex) {
+//            log.info(" constructor hilosEjecucion");
+//            new ExceptionFlujo(ex);
+//        }
+//                prueba.addActionListener(this);
+    }
+
+     
+
+    /**
+ * Iniciar el hilo(Thread) con tiempo estimado con las excepciones propias de este,
+ * IllegalArgumentException, InterruptedException
+ */
+//public void iniciar(){
+//
+//      ArrayList<Thread> clients = new ArrayList<Thread>();
+//        log.info("metodo iniciar de la clase ConectorCliente");
+//        for(int i=0; i < 1; i++) {
+//            hil = new hilosEjecucion(i, usuario, sk);
+//            clients.add(hil);
+//        }
+//        for (Thread thread : clients)  {
+//            try
+//            {
+//              thread.sleep(5000);
+//              thread.start();
+//            }
+//            catch(Exception e)
+//            {
+//                new ExceptionFlujo(e);
+//            }
+//
+//
+//        }
+//}
+//
+//public void iniciar()
+//{
+//    int i = 0;
+//    log.info("metodo iniciar de la clase ConectorCliente");
+//    hil = new hilosEjecucion(i, usuario, sk);
+//    hil.run();
+//}
+
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -78,8 +189,8 @@ public class SesionUsuario extends javax.swing.JFrame {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(btnCerrarCesion)
-                    .add(btnReiniciar)
-                    .add(btnApagar))
+                    .add(btnApagar)
+                    .add(btnReiniciar))
                 .addContainerGap(266, Short.MAX_VALUE))
         );
 
@@ -88,7 +199,10 @@ public class SesionUsuario extends javax.swing.JFrame {
 
     private void btnCerrarCesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarCesionActionPerformed
         // TODO add your handling code here:
-           ejecucionexe("shutdown -l");
+          // ejecucionexe("shutdown -l");
+         hilosEjecucion hil = new hilosEjecucion();
+         hil.enviarMensajeServidorCierre();
+         System.exit(1);
     }//GEN-LAST:event_btnCerrarCesionActionPerformed
 
     private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
@@ -142,17 +256,45 @@ public class SesionUsuario extends javax.swing.JFrame {
     }
 
     public void inicio(){
-                SesionUsuario s = new SesionUsuario();
-                s.setVisible(true);
-                s.setLocationRelativeTo(null); // centrar en pantalla
-                s.setLocation(1100,0);
-                s.setResizable(false);
-                s.setSize(250,80);
+                //SesionUsuario s = new SesionUsuario();
+//                s.setVisible(true);
+//                s.setLocationRelativeTo(null); // centrar en pantalla
+//                s.setLocation(1100,0);
+//                s.setResizable(false);
+//                s.setSize(250,80);
+//                this.setBounds(1100, 0, 250, 80);
+//                this.setVisible(true);
+//                this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//                this.setLocationRelativeTo(null); // centrar en pantalla
+                //this.setLocation(1100,0);
+//                this.setResizable(false);
+               // this.setSize(250,80);
     }
+
+     public void actionPerformed(ActionEvent e) {
+        if ("cerrarSesion" == e.getActionCommand())
+        {
+             hilosEjecucion hil = new hilosEjecucion();
+             hil.enviarMensajeServidorCierre();
+             System.exit(1);
+        }else if("apagar" == e.getActionCommand())
+        {
+
+        }else if("reiniciar" == e.getActionCommand()){}
+    }
+
+
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApagar;
     private javax.swing.JButton btnCerrarCesion;
     private javax.swing.JButton btnReiniciar;
     // End of variables declaration//GEN-END:variables
+
+   
+    
+
+    
 
 }

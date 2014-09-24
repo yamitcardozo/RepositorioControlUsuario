@@ -45,37 +45,38 @@ public class testComponentes {
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
+    
 //     @Test
 //     public void hello() {}
-    @Test
-    public void asigancionAtributosLoggueoTest(){
-        DataOutputStream dos;
-        Socket sk;
-        DataInputStream dis;
-        String respuesta = null;
-
-        userServicio s = new userServicio();
-        try {
-
-            sk = new Socket("localhost", 10578);
-            dos = new DataOutputStream(sk.getOutputStream());
-            dis = new DataInputStream(sk.getInputStream());
-
-            dos.writeUTF(s.getUsuario()+"&"+s.getContraseña()+"&"+
-                    s.getFechaInicio()+"&"+s.getHoraInicio()+"&");
-
-            respuesta = dis.readUTF();
-            dis.close();
-            dos.close();
-            sk.close();
-
-        } catch (Exception ex) {
-            new ExceptionFlujo(ex);
-        }
-         s.asignacionAtributos("oscar&mera&28/08/2014&9:30&");
-         assertEquals("oscar",s.getUsuario());
-         assertEquals("mera",s.getContraseña());
-         assertEquals("28/08/2014",s.getFechaInicio());
-       assertEquals("9:30",s.getHoraInicio());
-    }
+//    @Test
+//    public void asigancionAtributosLoggueoTest(){
+//        DataOutputStream dos;
+//        Socket sk;
+//        DataInputStream dis;
+//        String respuesta = null;
+//
+//        userServicio s = new userServicio();
+//        try {
+//
+//            sk = new Socket("localhost", 10578);
+//            dos = new DataOutputStream(sk.getOutputStream());
+//            dis = new DataInputStream(sk.getInputStream());
+//
+//            dos.writeUTF(s.getUsuario()+"&"+s.getContraseña()+"&"+
+//                    s.getFechaInicio()+"&"+s.getHoraInicio()+"&");
+//
+//            respuesta = dis.readUTF();
+//            dis.close();
+//            dos.close();
+//            sk.close();
+//
+//        } catch (Exception ex) {
+//            new ExceptionFlujo(ex);
+//        }
+//         s.asignacionAtributos("oscar&mera&28/08/2014&9:30&");
+//         assertEquals("oscar",s.getUsuario());
+//         assertEquals("mera",s.getContraseña());
+//         assertEquals("28/08/2014",s.getFechaInicio());
+//       assertEquals("9:30",s.getHoraInicio());
+//    }
 }

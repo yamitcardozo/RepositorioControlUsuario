@@ -5,12 +5,13 @@
 
 package ControlUsuario;
 
-import AccesoDatos.impleLecturaRegUsuario;
 import ControlException.ExceptionFlujo;
+import Entidades.Usuario;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
-import java.util.logging.Level;
+import javax.swing.JTextArea;
 import org.apache.log4j.Logger;
 
 /**
@@ -18,69 +19,243 @@ import org.apache.log4j.Logger;
  * @author Administrator2
  */
 // persona
-public class hilosEjecucion extends Thread {
+public class hilosEjecucion  {
 
-    protected Socket sk;
+    /**
+     *  socket para hacer la comunicacion de cliente servidor
+     */
+    protected static Socket sk =null;
+    /**
+     *  objeto para realizar flujos de salida de datos
+     */
     protected DataOutputStream dos;
+      /**
+     *  objeto para realizar flujos de entreda de datos
+     */
     protected DataInputStream dis;
+    /**
+     *  id de contador de usuario en momento determinado
+     */
     private int id;
+    /**
+     *  DTO  para almacenar informacion de usuario
+     */
+    private Usuario usUsuario;
+    /**
+     *  realiza servicios de usuario
+     */
     private userServicio usServicio;
-    private impleLecturaRegUsuario iml;
-    private Logger log = Logger.getLogger(hilosEjecucion.class);
+    /**
+     *  log para almacenar informacion de errores
+     */
+    Logger log = Logger.getLogger(hilosEjecucion.class);
 
-    public hilosEjecucion(int id) {
-        this.id = id;
+    int verificador=0;
+    private JTextArea mensajeChat=null;
+//    /**
+//     *  parametro para ingreso usuario
+//     */
+//     private boolean loguser = false;
+//      /**
+//     *  parametro para cerra cesion
+//     */
+//     private boolean logcierre = false;
+     /**
+      *  contructor asigna parametro cierre de cesion
+      */
+//     public hilosEjecucion()
+//     {
+//         logcierre = true;
+//     }
+    /**
+     *  constructor hilos de ejecucion de  cada cliente
+     * @param id
+     */
+
+//    public hilosEjecucion(int id,Usuario usuario,Socket sk) {
+//
+//        this.id = id;
+//        this.sk = sk;
+//        usUsuario = usuario;
+//        usServicio = new userServicio();
+//
+//         try
+//        {
+//         dis = new DataInputStream(sk.getInputStream());
+//         dos = new DataOutputStream(sk.getOutputStream());
+//        }catch(Exception ex)
+//        {
+//            new ExceptionFlujo(ex);
+//        }
+//
+//
+//    }
+    public hilosEjecucion() {
+
+//        this.id = id;
+//        this.sk = sk;
+//        usUsuario = usuario;
+        // declarando el socket a utilizar
+        if(sk==null)
+        {
+            try {
+
+                log.info("asignacion de IP");
+
+            sk = new Socket("localhost", 10578);
+
+            log.info("acepto la IP suministrada");
+            
+        } catch (Exception ex) {
+            log.info(" constructor hilosEjecucion declaracion socket");
+            new ExceptionFlujo(ex);
+        }
+        }
+        //usServicio = new userServicio();
+
+        // declarando flujos de entreda y salida
+         try
+        {
+         dis = new DataInputStream(sk.getInputStream());
+         dos = new DataOutputStream(sk.getOutputStream());
+        }catch(Exception ex)
+        {
+            log.info(" constructor hilosEjecucion declaracion flujos entreda salida");
+            new ExceptionFlujo(ex);
+        }
+
+
     }
 
-    @Override
+      public Usuario getUsUsuario() {
+        return usUsuario;
+    }
+
+    public void setUsUsuario(Usuario usUsuario) {
+        this.usUsuario = usUsuario;
+    }
+    
+    /**
+     *  iniciador de cada hilo cliente
+     */
     public void run()  {
-        try {
-            usServicio = new userServicio();
-//        SocketControl s = new SocketControl();
-//        Flujos f = new Flujos();
+
+     /** escribir mensaje al servidor  */
+         try
+        {
+             System.out.println(usUsuario.getIdUsuario()+" "+usUsuario.getContraseña()+"enviados");
+         dos.writeUTF("1"+"&"+usUsuario.getIdUsuario()+"&"+usUsuario.getContraseña());
+
+        }catch(Exception ex)
+        {
+            log.info("metodo enviarMensajeServidor");
+            new ExceptionFlujo(ex);
+        }
+
+        verificador=1;
+         /** recivir mensaje de servidor*/
+//System.out.println("ent1");
+//         String mensaje = "";
+//        try
+//        {
+//System.out.println("ent2");
+//         mensaje = dis.readUTF();
+//         System.out.println("ent3");
+//         log.info("metodo recibirmensaje asignar valores set get enviado:"+ mensaje);
 //
-//        sk = s.instanciaSocket("127.0.0.1", 10578);
-//        dos = new DataOutputStream(f.flujoSocket(sk));
-//
-//        try {
-//            //dos = new DataOutputStream(sk.getOutputStream());
-//            dis = new DataInputStream(sk.getInputStream());
-//
-//            System.out.println(id + " envía saludo");
-//            dos.writeUTF(usServicio.getUsuario()+"&"+usServicio.getContraseña()+"&"+
-//                    usServicio.getFechaInicio()+"&"+usServicio.getHoraInicio()+"&");
-//            String respuesta="";
-//            respuesta = dis.readUTF();
-//
-//            usServicio.asignacionAtributos(respuesta);
-//
-//            System.out.println(id + " Servidor devuelve saludo: welcome " + respuesta);
-//
-//            dis.close();
-//            dos.close();
-//            sk.close();
-//        } catch (/*IOException ex*/ Exception e) {
-//            e.printStackTrace();
-//            //Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
+//         if(!mensaje.equalsIgnoreCase("NA"))
+//         {
+//         usServicio = new userServicio();
+//         usServicio.usuarioDivision(mensaje, usUsuario);
+//         log.info(usUsuario.getIdUsuario()+" "+usUsuario.getContraseña()+" "+usUsuario.getPrimerNombre()+"  "+ usUsuario.getPrimerApellido());
+//         }else
+//         {
+//             usUsuario.setIdUsuario("NA11111111234");
+//             usUsuario.setContraseña("NA111111111123");
+//         }
+//        }catch(Exception e)
+//        {
+//            new ExceptionFlujo(e);
 //        }
-            iml = new impleLecturaRegUsuario();
-            String d = iml.leerRegUsuario();
-            usServicio.asignacionAtributos(d);
-            log.info("envio de usuario existente en el sistema" + d);
-        } catch (ExceptionFlujo ex) {
-             new ExceptionFlujo(ex);
+         
+    }
+
+     public void enviarMensajeServidorCierre()
+    {
+
+        try
+        {
+         dos.writeUTF("2&cierreCesion");
+
+        }catch(Exception ex)
+        {
+            log.info("metodo enviarMensajeServidorCierre");
+            new ExceptionFlujo(ex);
         }
     }
+     public void recibirMensajesServidor(){
+        // Obtiene el flujo de entrada del socket
+        DataInputStream entradaDatos = null;
+        String mensaje;
+        try {
+            entradaDatos = new DataInputStream(sk.getInputStream());
+//            dis = new DataInputStream(sk.getInputStream());
+        } catch (IOException ex) {
+          //  log.error("Error al crear el stream de entrada: " + ex.getMessage());
+        } catch (NullPointerException ex) {
+           // log.error("El socket no se creo correctamente. ");
+        }
 
-         /*long minPrime;
-         hilosEjecucion(long minPrime) {
-             this.minPrime = minPrime;
-         }
+        // Bucle infinito que recibe mensajes del servidor
+        boolean conectado = true;
+        while (conectado) {
+            try {
+                 System.out.println("romelio");
+                mensaje = entradaDatos.readUTF();
+//                 mensaje = dis.readUTF();
+                System.out.println("romw");
+                if(verificador==1)
+                {
 
-         public void run() {
-             // compute primes larger than minPrime
-              ConectorCliente c = new ConectorCliente();
-              c.iniciar();
-         }*/
+                    try
+                    {
 
+                     log.info("metodo recibirmensaje asignar valores set get enviado:"+ mensaje);
+
+                     if(!mensaje.equalsIgnoreCase("NA"))
+                     {
+                     usServicio = new userServicio();
+                     usServicio.usuarioDivision(mensaje, usUsuario);
+                     log.info(usUsuario.getIdUsuario()+" "+usUsuario.getContraseña()+" "+usUsuario.getPrimerNombre()+"  "+ usUsuario.getPrimerApellido());
+                     }else
+                     {
+                         usUsuario.setIdUsuario("NA11111111234");
+                         usUsuario.setContraseña("NA111111111123");
+                     }
+                    }catch(Exception e)
+                    {
+                        new ExceptionFlujo(e);
+                    }
+                    verificador=0;
+                }else{
+
+                    if(mensajeChat==null){
+                mensajeChat = new ClienteChat().getMensajesChat();
+                    }
+
+                mensajeChat.append(mensaje + "\n");
+                }
+
+               //mensajesChat.append(mensaje + System.lineSeparator());
+            } catch (IOException ex) {
+//                log.error("Error al leer del stream de entrada: " + ex.getMessage());
+                conectado = false;
+            } catch (NullPointerException ex) {
+//                log.error("El socket no se creo correctamente. ");
+                conectado = false;
+            }
+        }
+    }
 }
+
+

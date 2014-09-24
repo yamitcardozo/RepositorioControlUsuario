@@ -11,13 +11,16 @@
 
 package ControlUsuario;
 
+import Entidades.Usuario;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.Calendar;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import org.jvnet.substance.SubstanceLookAndFeel;
 //import org.uispec4j.Button;
 //import org.uispec4j.TextBox;
 //import org.uispec4j.Window;
@@ -29,10 +32,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     /** Creates new form VentanaPrincipal */
 
-    userServicio servicioUsuario;
-
+                static hilosEjecucion h;
+                Usuario u;
+     
     public VentanaPrincipal() {
-
 //   try {
 // UIManager.setLookAndFeel("org.lookAndFeels");
 //
@@ -46,19 +49,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 // e.printStackTrace();
 //}
 
-     //  this.setUndecorated(true);//quita bordes a jframe
+//      this.setUndecorated(true);//quita bordes a jframe
 
         initComponents();
-
-      //  this.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE  );//evita cerra jframe con ALT+C
-       // this.setExtendedState( MAXIMIZED_BOTH );//maximizado
-        //this.setAlwaysOnTop(true);//siempre al frente
-        //nueva instancia de jBlocked pasando como parametros e este JFrame
-        //new jBloqueo( this ).block();
+        this.setVisible(true);
+//        confi d = new confi(this);
+//        jButton1.addActionListener(new no());
       
+//        this.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE  );//evita cerra jframe con ALT+C
+//        this.setExtendedState( MAXIMIZED_BOTH );//maximizado
+//        this.setAlwaysOnTop(true);//siempre al frente
+////        nueva instancia de jBlocked pasando como parametros e este JFrame
+//        new jBloqueo( this ).block();
 
+//        usuario =  new Usuario();
+//        c = new SesionUsuario(usuario);
     }
 
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -123,85 +131,111 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void s()
+    {
+        int i=0;
+        while(i==0)
+        {
+            if(i!=0)
+            {
+                i=1;
+            }else
+            {
+                i=0;
+            }
+        }
+    }
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         // TODO add your handling code here:
 
          // TODO add your handling code here:
-        servicioUsuario =  new userServicio();
-        
-        String contenidoFallo;
-        //PropertyConfigurator.configure("log4j.properties");
-        //String usuario = "yamit.cardozo";
-        //String contraseña = "soporte.enf";
+
+        if(u==null)
+        {
+            u = new Usuario();
+//            h = new hilosEjecucion();
+        }
+
+        //this.setVisible(false);
+
+      
+//        PropertyConfigurator.configure("log4j.properties");
+//        String usuario = "yamit.cardozo";
+//        String contraseña = "soporte.enf";
 
         String user = txtUsuario.getText();
         String pass = new String(tpwPassword.getPassword());
+//        System.out.println(user);
+//        usuario.setIdUsuario(user);
+//        usuario.setContraseña(pass);
+//        Calendar c1 = Calendar.getInstance();
+//        servicioUsuario.setFechaInicio(c1.get(Calendar.DATE)+"/"+(c1.get((Calendar.MONTH))+1)+
+//                "/"+c1.get(Calendar.YEAR)+"");
+//        servicioUsuario.setHoraInicio(c1.get(Calendar.HOUR)+":"+c1.get(Calendar.MINUTE)+"");
+//
+//         creacion de hilo cliente
+//        ConectorCliente c = new ConectorCliente(usuario);
+//
+//        c.iniciar();
+//
 
-        servicioUsuario.setUsuario(user);
-        servicioUsuario.setContraseña(pass);
-        Calendar c1 = Calendar.getInstance();
-        servicioUsuario.setFechaInicio(c1.get(Calendar.DATE)+"/"+(c1.get((Calendar.MONTH))+1)+
-                "/"+c1.get(Calendar.YEAR)+"");
-        servicioUsuario.setHoraInicio(c1.get(Calendar.HOUR)+":"+c1.get(Calendar.MINUTE)+"");
-
-        // creacion de hilo cliente
-        ConectorCliente c = new ConectorCliente();
-        c.iniciar();
-
-        String usuario = servicioUsuario.getUsuario();
-        String contraseña = servicioUsuario.getContraseña();
-
-        if(user.equals("") && pass.equals("")){
-            JOptionPane.showMessageDialog(this, "usuario y contraseña estan en blanco");
+        if(user.equals("") || pass.equals("")){
+            JOptionPane.showMessageDialog(this, "campo vacio ingrese informacion solicitada");
         }else{
-            contenidoFallo="";
-            if(!user.equals("")){
-                if(usuario.equals(user)){
+                 u.setIdUsuario(user);
+                 u.setContraseña(pass);
+                 h.setUsUsuario(u);
+                 h.run();
+                 u = h.getUsUsuario();
+                 
+                   String usuari = u.getIdUsuario();
+                   String contraseñ = u.getContraseña();
+
+                 // condiciones de valides
+
+                if(usuari.equals(user)){
+
+                    if(contraseñ.equals(pass)){
+
+                        this.setVisible(false);
+                        SesionUsuario q = new SesionUsuario();
+//                        System.out.println("recivir");
+//                        h.recibirMensajesServidor();
+//                         System.out.println("recivir11");
+
+                    }else{
+                        JOptionPane.showMessageDialog(this, "contraseña incorrecta");
+                    }  
 
                 }else{
                     JOptionPane.showMessageDialog(this, "usuario no existe");
-                }
-                if(!pass.equals("")){
-                    if(contraseña.equals(pass)){
-                        //System.exit(1);
-                        this.setVisible(false);
-                        new SesionUsuario().inicio();
-                        this.dispose();
-                    }else{
-                        JOptionPane.showMessageDialog(this, "contraseña incorrecta");
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(this, "campo contraseña esta en blanco");
-                }
-            }else{
-                JOptionPane.showMessageDialog(this, "campo usuario esta en blanco");
-            }
+                }                
         }
     }//GEN-LAST:event_btnEnviarActionPerformed
 
-    /**
+     /**
     * @param args the command line arguments
     */
     public static void main(String args[]) {
         try
             {
-                JFrame.setDefaultLookAndFeelDecorated(true);
-                JDialog.setDefaultLookAndFeelDecorated(true);
-              // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-               // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-               // UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");      no encontro libreria
-                //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-                   //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-                 // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");  no encontro libreria
-                    //UIManager.setLookAndFeel( "com.apple.laf.AquaLookAndFeel");   no encontro libreria
-                   // UIManager.setLookAndFeel(  "com.sun.java.swing.plaf.mac.MacLookAndFeel");  no encontro libreria
-                       //     UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-//                    UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
-                //UIManager.setLookAndFeel(" org.jvnet.substance.skin.CremeSkin");
-                //SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.CremeCoffeeSkin");
-                UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
+//                JFrame.setDefaultLookAndFeelDecorated(true);
+//                JDialog.setDefaultLookAndFeelDecorated(true);
+//              // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//               // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+//               // UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");      no encontro libreria
+//                //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+//                   //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+//                 // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");  no encontro libreria
+//                    //UIManager.setLookAndFeel( "com.apple.laf.AquaLookAndFeel");   no encontro libreria
+//                   // UIManager.setLookAndFeel(  "com.sun.java.swing.plaf.mac.MacLookAndFeel");  no encontro libreria
+//                       //     UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+////                    UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+//                //UIManager.setLookAndFeel(" org.jvnet.substance.skin.CremeSkin");
+//                //SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.CremeCoffeeSkin");
+//                UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
 
-                   
+
 
 
 
@@ -212,11 +246,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 e.printStackTrace();
             }
 
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VentanaPrincipal().setVisible(true);
+                //VentanaPrincipal c = new VentanaPrincipal();
+                 new VentanaPrincipal();
+                 
             }
         });
+                 h = new hilosEjecucion();
+                 h.recibirMensajesServidor();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
