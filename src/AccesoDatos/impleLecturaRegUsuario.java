@@ -6,11 +6,7 @@
 package AccesoDatos;
 
 import ControlException.ExceptionFlujo;
-import ControlUsuario.userServicio;
 import LogicaDeNegocio.InterfazLecturaRegusuario;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.net.Socket;
 
 /**
  *

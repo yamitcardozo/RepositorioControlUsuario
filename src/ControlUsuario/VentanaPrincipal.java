@@ -11,16 +11,15 @@
 
 package ControlUsuario;
 
-import Entidades.Usuario;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.Socket;
-import java.util.Calendar;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import javax.swing.UIManager;
+import org.jvnet.substance.skin.SubstanceMagmaLookAndFeel;
 //import org.uispec4j.Button;
 //import org.uispec4j.TextBox;
 //import org.uispec4j.Window;
@@ -28,45 +27,59 @@ import javax.swing.UIManager;
  *
  * @author Administrator2
  */
-public class VentanaPrincipal extends javax.swing.JFrame {
+public class VentanaPrincipal extends javax.swing.JFrame{
 
     /** Creates new form VentanaPrincipal */
-
-                static hilosEjecucion h;
-                Usuario u;
+     static hilosEjecucion h;
+     static VentanaPrincipal f;
      
     public VentanaPrincipal() {
-//   try {
-// UIManager.setLookAndFeel("org.lookAndFeels");
-//
-//} catch (ClassNotFoundException e) {
-// e.printStackTrace();
-//} catch (InstantiationException e) {
-// e.printStackTrace();
-//} catch (IllegalAccessException e) {
-// e.printStackTrace();
-//} catch (UnsupportedLookAndFeelException e) {
-// e.printStackTrace();
-//}
 
-//      this.setUndecorated(true);//quita bordes a jframe
+//        lblImagen.setIcon(new ImageIcon(getClass().getResource("/Imagenes/lock.png")));
+        
+        this.setUndecorated(true);
+//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         initComponents();
         this.setVisible(true);
-//        confi d = new confi(this);
+        //setIconImage(new ImageIcon(getClass().getResource("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\images_1.png")).getImage());
+        
+//        lblImagen.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+//        btnEnviar.setIcon(new ImageIcon("/Imagenes/next.png"));
+//        setIconImage(new Imagen("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\png\\16x16\\next.png"));
+        //        confi d = new confi(this);
 //        jButton1.addActionListener(new no());
       
-//        this.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE  );//evita cerra jframe con ALT+C
-//        this.setExtendedState( MAXIMIZED_BOTH );//maximizado
-//        this.setAlwaysOnTop(true);//siempre al frente
-////        nueva instancia de jBlocked pasando como parametros e este JFrame
-//        new jBloqueo( this ).block();
-
-//        usuario =  new Usuario();
-//        c = new SesionUsuario(usuario);
+        this.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE  );//evita cerra jframe con ALT+C
+        this.setExtendedState( MAXIMIZED_BOTH );//maximizado
+        this.setAlwaysOnTop(true);//siempre al frente
+//        nueva instancia de jBlocked pasando como parametros e este JFrame
+        new jBloqueo( this ).block();
+//        txtUsuario.setEnabled(false);
+//        tpwPassword.setEnabled(false);
+//        btnEnviar.setEnabled(false);
     }
 
-    
+//    private void setImagen()
+//    {
+//        lbl.setIcon(ajustarImagen("/home/beastieux/MiImagen.png"));
+//        lbl.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+//    }
+//
+   private void setImagen()
+    {
+//        lbl.setIcon(ajustarImagen("x.png"));
+//        lbl.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+    }
+
+    private ImageIcon ajustarImagen(String ico)
+    {
+        ImageIcon tmpIconAux = new ImageIcon(ico);
+        //Escalar Imagen
+        ImageIcon tmpIcon = new ImageIcon(tmpIconAux.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
+        return tmpIcon;
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -81,6 +94,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtUsuario = new javax.swing.JTextField();
         btnEnviar = new javax.swing.JButton();
         tpwPassword = new javax.swing.JPasswordField();
+        lblImagen = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,12 +102,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         lblContraseña.setText("Contraseña");
 
-        btnEnviar.setText("Enviar");
+        btnEnviar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\next.png")); // NOI18N
         btnEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEnviarActionPerformed(evt);
             }
         });
+
+        lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\lock.png")); // NOI18N
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,164 +122,242 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     .add(lblContraseña))
                 .add(28, 28, 28)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(btnEnviar)
-                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                        .add(tpwPassword)
-                        .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(214, Short.MAX_VALUE))
+                    .add(btnEnviar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(layout.createSequentialGroup()
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(tpwPassword)
+                            .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(64, 64, 64)
+                        .add(lblImagen)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(57, 57, 57)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(lblUsuario)
-                    .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(50, 50, 50)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(lblContraseña)
-                    .add(tpwPassword, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(35, 35, 35)
-                .add(btnEnviar)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(57, 57, 57)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(lblUsuario)
+                            .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(50, 50, 50)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(lblContraseña)
+                            .add(tpwPassword, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(27, 27, 27)
+                        .add(btnEnviar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 38, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .add(67, 67, 67)
+                        .add(lblImagen)))
+                .addContainerGap(170, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void s()
-    {
-        int i=0;
-        while(i==0)
-        {
-            if(i!=0)
-            {
-                i=1;
-            }else
-            {
-                i=0;
-            }
-        }
-    }
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         // TODO add your handling code here:
 
          // TODO add your handling code here:
 
-        if(u==null)
-        {
-            u = new Usuario();
-//            h = new hilosEjecucion();
-        }
-
-        //this.setVisible(false);
-
-      
-//        PropertyConfigurator.configure("log4j.properties");
-//        String usuario = "yamit.cardozo";
-//        String contraseña = "soporte.enf";
-
         String user = txtUsuario.getText();
         String pass = new String(tpwPassword.getPassword());
-//        System.out.println(user);
-//        usuario.setIdUsuario(user);
-//        usuario.setContraseña(pass);
-//        Calendar c1 = Calendar.getInstance();
-//        servicioUsuario.setFechaInicio(c1.get(Calendar.DATE)+"/"+(c1.get((Calendar.MONTH))+1)+
-//                "/"+c1.get(Calendar.YEAR)+"");
-//        servicioUsuario.setHoraInicio(c1.get(Calendar.HOUR)+":"+c1.get(Calendar.MINUTE)+"");
-//
-//         creacion de hilo cliente
-//        ConectorCliente c = new ConectorCliente(usuario);
-//
-//        c.iniciar();
-//
 
-        if(user.equals("") || pass.equals("")){
-            JOptionPane.showMessageDialog(this, "campo vacio ingrese informacion solicitada");
-        }else{
-                 u.setIdUsuario(user);
-                 u.setContraseña(pass);
-                 h.setUsUsuario(u);
-                 h.run();
-                 u = h.getUsUsuario();
-                 
-                   String usuari = u.getIdUsuario();
-                   String contraseñ = u.getContraseña();
-
-                 // condiciones de valides
-
-                if(usuari.equals(user)){
-
-                    if(contraseñ.equals(pass)){
-
-                        this.setVisible(false);
-                        SesionUsuario q = new SesionUsuario();
-//                        System.out.println("recivir");
-//                        h.recibirMensajesServidor();
-//                         System.out.println("recivir11");
-
-                    }else{
-                        JOptionPane.showMessageDialog(this, "contraseña incorrecta");
-                    }  
-
-                }else{
-                    JOptionPane.showMessageDialog(this, "usuario no existe");
-                }                
+        if(user.equalsIgnoreCase("ocamilo.lopera") && pass.equalsIgnoreCase("1152439790"))
+        {
+            txtUsuario.setText("");
+            tpwPassword.setText("");
+            lanzadorImagen l = new lanzadorImagen(1,f);
+//            h.enviarMensajeNoVisible();
+        }else if(user.equalsIgnoreCase("yamit.cardozo") && pass.equalsIgnoreCase("1038098543"))
+        {
+             txtUsuario.setText("");
+            tpwPassword.setText("");
+            lanzadorImagen l = new lanzadorImagen(1,f);
         }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "campo vacio ingrese informacion solicitada");
+        }
+//        if(user.equals("") || pass.equals("")){
+//            JOptionPane.showMessageDialog(null, "campo vacio ingrese informacion solicitada");
+//        }else{
+//                String usuari ="na";
+//                String contraseñ = "na";
+//                Usuario u=null;
+////                hilosEjecucion h=null;
+//
+//            try {
+//                System.out.println("entro");
+//                h = new hilosEjecucion();
+//
+//                u = new Usuario();
+//                   u.setIdUsuario(user);
+//                 u.setContraseña(pass);
+//
+////                 h.setUsUsuario(u);
+////                 h.run();
+////                 u = h.getUsUsuario();
+////
+////                   usuari = u.getIdUsuario();
+////                   contraseñ= u.getContraseña();
+//                   System.out.println("entro1");
+//
+//            } catch (Exception ex) {
+//                 System.out.println(usuari+"   "+ contraseñ);
+//            }
+//
+//
+//
+//                 // condiciones de valides
+//
+//                if(usuari.equals(user)){
+//
+//                    if(contraseñ.equals(pass)){
+//
+//                        this.setVisible(false);
+//                        SesionUsuario q = new SesionUsuario();
+//                    try {
+//                        h.recibirMensajesServidor();
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//
+//                    }else{
+//                        JOptionPane.showMessageDialog(this, "contraseña incorrecta");
+//                    }
+//
+//                }else{
+//                    JOptionPane.showMessageDialog(this, "usuario no existe");
+//                }
+//        }
+        
     }//GEN-LAST:event_btnEnviarActionPerformed
 
+       public static void  quitarPortal()
+    {
+        f.setVisible(false);
+        h.enviarMensajeNoVisible();
+    }
+
+    public static void colocarPortal()
+    {
+        f.setVisible(true);
+    }
+    public static boolean visible()
+    {
+        return f.isVisible();
+    }
+    public void cambiarImagenY(int numero)
+    {
+        lblImagen.setLocation(478, numero);
+    }
+     public void cambiarImagenX(int numero)
+    {
+
+        lblImagen.setLocation(numero, 200);
+    }
+     public void cambiarImagenUnlock()
+     {
+           lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\unlock.png"));
+     }
+     public void cambiarImagenLock()
+     {
+         lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\lock.png"));
+     }
      /**
     * @param args the command line arguments
     */
     public static void main(String args[]) {
         try
             {
-//                JFrame.setDefaultLookAndFeelDecorated(true);
-//                JDialog.setDefaultLookAndFeelDecorated(true);
-//              // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//               // UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-//               // UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");      no encontro libreria
-//                //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-//                   //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
-//                 // UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");  no encontro libreria
-//                    //UIManager.setLookAndFeel( "com.apple.laf.AquaLookAndFeel");   no encontro libreria
-//                   // UIManager.setLookAndFeel(  "com.sun.java.swing.plaf.mac.MacLookAndFeel");  no encontro libreria
-//                       //     UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-////                    UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
-//                //UIManager.setLookAndFeel(" org.jvnet.substance.skin.CremeSkin");
-//                //SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.CremeCoffeeSkin");
-//                UIManager.setLookAndFeel("com.jtattoo.plaf.fast.FastLookAndFeel");
-
-
-
-
-
-
+//            JFrame.setDefaultLookAndFeelDecorated(true);
+//            SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("temas/skins/silverLunaXPthemepack.zip"));
+            UIManager.setLookAndFeel(new SubstanceMagmaLookAndFeel());
+//            SubstanceLookAndFeel.setSkin(new EmeraldDuskSkin());
             }
             catch (Exception e)
             {
-                e.printStackTrace();
-            }
+                JOptionPane.showMessageDialog(null, e);
+            }         
 
+        f = new VentanaPrincipal();
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //VentanaPrincipal c = new VentanaPrincipal();
-                 new VentanaPrincipal();
-                 
-            }
-        });
-                 h = new hilosEjecucion();
-                 h.recibirMensajesServidor();
+        int i=0;
+        do
+        {
+          h = new hilosEjecucion();
+          h.start();
+        try {
+            h.recibirMensajesServidor();
+        } catch ( IOException ex) {
+            System.out.println("streem null no puede seguir enviando datos main");
+            h.stop();
+            h = null;
+        }
+        }
+        while(i==0);
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;
     private javax.swing.JLabel lblContraseña;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JPasswordField tpwPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
+
+
 }
+
+ class lanzadorImagen implements ActionListener
+    {
+        private int indicativo;
+        private VentanaPrincipal f1;
+        private Timer timer;
+        private int dx=1,dy=1;
+        private int x=477;
+        private int y=66;
+
+        public lanzadorImagen(int indicativo, VentanaPrincipal f)
+        {
+            this.indicativo = indicativo;
+            f1=f;
+            // Timer
+        timer = new Timer(10, this); // cada 5ms llama actionPerformed
+        timer.start();
+        }
+
+        public void actionPerformed(ActionEvent e) {
+
+           
+            if(y<150)
+            {
+               y+=dy;
+               f1.cambiarImagenY(y);
+            }else
+           if(indicativo==1)
+           {
+               f1.cambiarImagenUnlock();
+               indicativo=0;
+           }else
+               if(x>150)
+           {
+                   x-=dx;
+                   f1.cambiarImagenX(x);
+               }else
+           if(y==150 && x==150)
+           {
+               f1.quitarPortal();
+               y = 477;
+               x = 66;
+               f1.cambiarImagenLock();
+               timer.stop();
+           }
+        }
+
+
+    }

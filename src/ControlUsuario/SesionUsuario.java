@@ -200,8 +200,8 @@ public class SesionUsuario extends javax.swing.JFrame implements ActionListener{
     private void btnCerrarCesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarCesionActionPerformed
         // TODO add your handling code here:
           // ejecucionexe("shutdown -l");
-         hilosEjecucion hil = new hilosEjecucion();
-         hil.enviarMensajeServidorCierre();
+//         hilosEjecucion hil = new hilosEjecucion();
+//         hil.enviarMensajeServidorCierre();
          System.exit(1);
     }//GEN-LAST:event_btnCerrarCesionActionPerformed
 
@@ -274,8 +274,8 @@ public class SesionUsuario extends javax.swing.JFrame implements ActionListener{
      public void actionPerformed(ActionEvent e) {
         if ("cerrarSesion" == e.getActionCommand())
         {
-             hilosEjecucion hil = new hilosEjecucion();
-             hil.enviarMensajeServidorCierre();
+//             hilosEjecucion hil = new hilosEjecucion();
+//             hil.enviarMensajeServidorCierre();
              System.exit(1);
         }else if("apagar" == e.getActionCommand())
         {
