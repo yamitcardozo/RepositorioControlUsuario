@@ -40,7 +40,7 @@
                       <Component id="lblImagen" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace pref="150" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -98,11 +98,6 @@
     <Component class="javax.swing.JPasswordField" name="tpwPassword">
     </Component>
     <Component class="javax.swing.JLabel" name="lblImagen">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Elelegido\Documents\NetBeansProjects\6.5\RepositorioControlUsuario\imagenes\lock.png"/>
-        </Property>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

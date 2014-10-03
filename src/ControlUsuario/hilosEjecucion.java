@@ -93,7 +93,7 @@ public class hilosEjecucion extends Thread  {
 //
 //
 //    }
-    public hilosEjecucion(){
+    public hilosEjecucion(VentanaPrincipal f) {
 
 //        this.creado = creado;
         sk=null;
@@ -109,13 +109,14 @@ public class hilosEjecucion extends Thread  {
         {
             try {
                 log.info("asignacion de IP");
-                sk = new Socket("192.168.37.145", 10578);
-//                sk = new Socket("localhost", 10578);
+//                sk = new Socket("192.168.37.145", 10578);
+                sk = new Socket("localhost", 10578);
                 log.info("acepto la IP suministrada");
                 i=false;
         }catch (IOException e)
         {
             log.info("no hay destino de conexion");
+//            f.mostrarMensajeIp();
             continue;
         }
          catch (Exception ex) {
@@ -152,7 +153,7 @@ public class hilosEjecucion extends Thread  {
      @Override
     public void run()  {
 
-
+// hay que quitar esto
         try
         {
          dos.writeUTF("20");
@@ -162,7 +163,7 @@ public class hilosEjecucion extends Thread  {
             log.info("metodo enviarMensajeServidor, mensaje de registro");
             new ExceptionFlujo(ex);
         }
-         
+         log.info("metodo enviarMensajeServidor, mensaje de inicio");
     }
 
      public void enviarMensajeConsulta()
@@ -250,6 +251,7 @@ public class hilosEjecucion extends Thread  {
         while (conectado) {
             try {
                 mensaje = entradaDatos.readUTF();
+
                 
                 if(mensaje.equalsIgnoreCase("inicioSesion"))
                 {
@@ -291,8 +293,7 @@ public class hilosEjecucion extends Thread  {
                         dos.writeUTF("okcerrarPortal");
                     VentanaPrincipal.colocarPortal();
                 }
-               else
-                
+                   else
                if(mensaje.equalsIgnoreCase("ok1038098"))
                 {
                     System.out.println("llego el mensaje ok");

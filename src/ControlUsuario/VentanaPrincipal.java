@@ -12,12 +12,9 @@
 package ControlUsuario;
 
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 import javax.swing.UIManager;
 import org.jvnet.substance.skin.SubstanceMagmaLookAndFeel;
 //import org.uispec4j.Button;
@@ -37,12 +34,17 @@ public class VentanaPrincipal extends javax.swing.JFrame{
 
 //        lblImagen.setIcon(new ImageIcon(getClass().getResource("/Imagenes/lock.png")));
         
-        this.setUndecorated(true);
+//        this.setUndecorated(true);
 //        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         initComponents();
+        btnEnviar.setIcon(new
+        javax.swing.ImageIcon(getClass().getResource("/Imagenes/next.png")));
+        lblImagen.setIcon(new
+        javax.swing.ImageIcon(getClass().getResource("/Imagenes/lock.png")));
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/images_1.png")).getImage());
         this.setVisible(true);
-        //setIconImage(new ImageIcon(getClass().getResource("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\images_1.png")).getImage());
+        
         
 //        lblImagen.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 //        btnEnviar.setIcon(new ImageIcon("/Imagenes/next.png"));
@@ -50,11 +52,11 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         //        confi d = new confi(this);
 //        jButton1.addActionListener(new no());
       
-        this.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE  );//evita cerra jframe con ALT+C
-        this.setExtendedState( MAXIMIZED_BOTH );//maximizado
-        this.setAlwaysOnTop(true);//siempre al frente
-//        nueva instancia de jBlocked pasando como parametros e este JFrame
-        new jBloqueo( this ).block();
+//        this.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE  );//evita cerra jframe con ALT+C
+//        this.setExtendedState( MAXIMIZED_BOTH );//maximizado
+//        this.setAlwaysOnTop(true);//siempre al frente
+////        nueva instancia de jBlocked pasando como parametros e este JFrame
+//        new jBloqueo( this ).block();
 //        txtUsuario.setEnabled(false);
 //        tpwPassword.setEnabled(false);
 //        btnEnviar.setEnabled(false);
@@ -109,8 +111,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
             }
         });
 
-        lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\lock.png")); // NOI18N
-
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,7 +129,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
                             .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(64, 64, 64)
                         .add(lblImagen)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -167,13 +167,13 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         {
             txtUsuario.setText("");
             tpwPassword.setText("");
-            lanzadorImagen l = new lanzadorImagen(1,f);
+            LanzadorImagen l = new LanzadorImagen(1,f);
 //            h.enviarMensajeNoVisible();
         }else if(user.equalsIgnoreCase("yamit.cardozo") && pass.equalsIgnoreCase("1038098543"))
         {
              txtUsuario.setText("");
             tpwPassword.setText("");
-            lanzadorImagen l = new lanzadorImagen(1,f);
+            LanzadorImagen l = new LanzadorImagen(1,f);
         }
         else
         {
@@ -259,11 +259,19 @@ public class VentanaPrincipal extends javax.swing.JFrame{
     }
      public void cambiarImagenUnlock()
      {
-           lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\unlock.png"));
+//           lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\unlock.png"));
+            lblImagen.setIcon(new
+        javax.swing.ImageIcon(getClass().getResource("/Imagenes/unlock.png")));
      }
      public void cambiarImagenLock()
      {
-         lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\lock.png"));
+//         lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\lock.png"));
+         lblImagen.setIcon(new
+        javax.swing.ImageIcon(getClass().getResource("/Imagenes/lock.png")));
+     }
+     public void mostrarMensajeIp()
+     {
+         JOptionPane.showInternalMessageDialog(rootPane,"socket cerrado o no encotro servidor","conexion Socket",JOptionPane.ERROR_MESSAGE);
      }
      /**
     * @param args the command line arguments
@@ -286,7 +294,7 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         int i=0;
         do
         {
-          h = new hilosEjecucion();
+          h = new hilosEjecucion(f);
           h.start();
         try {
             h.recibirMensajesServidor();
@@ -312,52 +320,3 @@ public class VentanaPrincipal extends javax.swing.JFrame{
 
 
 }
-
- class lanzadorImagen implements ActionListener
-    {
-        private int indicativo;
-        private VentanaPrincipal f1;
-        private Timer timer;
-        private int dx=1,dy=1;
-        private int x=477;
-        private int y=66;
-
-        public lanzadorImagen(int indicativo, VentanaPrincipal f)
-        {
-            this.indicativo = indicativo;
-            f1=f;
-            // Timer
-        timer = new Timer(10, this); // cada 5ms llama actionPerformed
-        timer.start();
-        }
-
-        public void actionPerformed(ActionEvent e) {
-
-           
-            if(y<150)
-            {
-               y+=dy;
-               f1.cambiarImagenY(y);
-            }else
-           if(indicativo==1)
-           {
-               f1.cambiarImagenUnlock();
-               indicativo=0;
-           }else
-               if(x>150)
-           {
-                   x-=dx;
-                   f1.cambiarImagenX(x);
-               }else
-           if(y==150 && x==150)
-           {
-               f1.quitarPortal();
-               y = 477;
-               x = 66;
-               f1.cambiarImagenLock();
-               timer.stop();
-           }
-        }
-
-
-    }
