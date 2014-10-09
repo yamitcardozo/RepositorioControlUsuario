@@ -27,7 +27,7 @@ public class LanzadorImagen implements ActionListener
             this.indicativo = indicativo;
             f1=f;
             // Timer
-        timer = new Timer(10, this); // cada 5ms llama actionPerformed
+        timer = new Timer(10, this); // cada 10ms llama actionPerformed
         timer.start();
         }
 

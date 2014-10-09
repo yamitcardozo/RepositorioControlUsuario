@@ -3,176 +3,265 @@
  * and open the template in the editor.
  */
 
-/*
- * VentanaPrincipal.java
- *
- * Created on 4/08/2014, 05:14:02 PM
- */
-
 package ControlUsuario;
 
-import java.awt.Image;
+import controlUsuario.JOptionPaneConTimeOut;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
-import javax.swing.ImageIcon;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 import org.jvnet.substance.skin.SubstanceMagmaLookAndFeel;
-//import org.uispec4j.Button;
-//import org.uispec4j.TextBox;
-//import org.uispec4j.Window;
+
 /**
  *
- * @author Administrator2
+ * @author Yamit Cardozo
  */
-public class VentanaPrincipal extends javax.swing.JFrame{
+public class VentanaPrincipal extends JFrame implements ActionListener{
 
-    /** Creates new form VentanaPrincipal */
-     static hilosEjecucion h;
-     static VentanaPrincipal f;
-     
-    public VentanaPrincipal() {
+    static hilosEjecucion h = null;
+    static VentanaPrincipal f;
+    static fram frameAux = null;
 
-//        lblImagen.setIcon(new ImageIcon(getClass().getResource("/Imagenes/lock.png")));
-        
-//        this.setUndecorated(true);
+    private final GridBagConstraints constraints;
+    private final Border border =
+        BorderFactory.createLoweredBevelBorder();
+    private final JTextField txtUsuario;
+    private final JPasswordField ptwPassword;
+    private final JLabel lblUsuario,lblPassword,lblImagen,lblImagenSesion;
+    private final JButton btnEnviar,btnRegistro;
+
+    private JPasswordField makePasswordFiel()
+    {
+        JPasswordField t = new JPasswordField(15);
+        t.setBorder(border);
+        getContentPane().add(t, constraints);
+        return t;
+    }
+    private JLabel makeLabel(String text) {
+        JLabel t = new JLabel(text);
+        t.setFont(new Font("Arial",Font.BOLD,18));
+        getContentPane().add(t, constraints);
+        return t;
+    }
+    private JTextField makeText() {
+        JTextField t = new JTextField(15);
+        t.setBorder(border);
+        getContentPane().add(t, constraints);
+        return t;
+    }
+
+     private JButton makeButton(String caption) {
+        JButton b = new JButton();
+        b.setActionCommand(caption);
+        b.addActionListener(this);
+        getContentPane().add(b, constraints);
+        return b;
+    }
+
+    public VentanaPrincipal()
+    {
+            int posx=0;
+            int posy=0;
+         // padre Pane
+          getContentPane().setLayout(new GridBagLayout());
+          constraints = new GridBagConstraints();
+          constraints.insets = new Insets(20, 5, 20,5);
+
+            constraints.ipadx = 80;
+            
+
+            constraints.gridx = 0;
+            constraints.gridy = 0;
+            constraints.gridwidth = 2;
+            constraints.fill = GridBagConstraints.NONE;
+            constraints.anchor = GridBagConstraints.CENTER;
+            lblImagenSesion = makeLabel("");
+
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.gridwidth = 1;
+            constraints.gridx = 0;
+            constraints.gridy = 1;
+            lblUsuario = makeLabel("Usuario");
+
+            constraints.gridx = 0;
+            constraints.gridy = 2;
+            lblPassword = makeLabel("Password");
+
+            constraints.gridx = 1;
+            constraints.gridy = 1;
+            txtUsuario = makeText();
+
+            constraints.gridx = 1;
+            constraints.gridy = 2;
+            ptwPassword = makePasswordFiel();
+
+
+            constraints.ipadx = 20;
+            constraints.ipady = 20;
+            constraints.gridx = 0;
+            constraints.gridy = 3;
+            constraints.gridwidth = 2;
+            constraints.fill = GridBagConstraints.NONE;
+            constraints.anchor = GridBagConstraints.CENTER;
+            constraints.insets = new Insets(20, 0, 0,0);
+            btnEnviar = makeButton("btnEnviar");
+
+            constraints.ipadx = 0;
+            constraints.ipady = 0;
+            constraints.gridx = 0;
+            constraints.gridy = 4;
+            constraints.gridwidth = 2;
+            constraints.fill = GridBagConstraints.NONE;
+            constraints.anchor = GridBagConstraints.CENTER;
+            constraints.insets = new Insets(20, 0, 0,0);
+            btnRegistro = makeButton("btnRegistro");
+            btnRegistro.setText("Registrarse");
+            btnRegistro.setFont(new Font("Arial",Font.BOLD,10));
+            btnRegistro.setForeground(Color.BLUE);
+
+            constraints.ipadx = 20;
+            constraints.ipady = 20;
+            constraints.gridx = 3;
+            constraints.gridy = 1;
+            constraints.gridheight = 3;
+            constraints.fill = GridBagConstraints.NONE;
+            constraints.anchor = GridBagConstraints.CENTER;
+            constraints.insets = new Insets(0, 20, 0,0);
+            lblImagen = makeLabel("");
+
+            // imagenes
+            lblImagenSesion.setIcon(new
+        javax.swing.ImageIcon(getClass().getResource("/Imagenes/images.jpg")));
+             lblImagen.setIcon(new
+        javax.swing.ImageIcon(getClass().getResource("/Imagenes/lock.png")));
+             btnEnviar.setIcon(new
+        javax.swing.ImageIcon(getClass().getResource("/Imagenes/next.png")));
+
+//              this.setUndecorated(true);
 //        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        initComponents();
-        btnEnviar.setIcon(new
-        javax.swing.ImageIcon(getClass().getResource("/Imagenes/next.png")));
-        lblImagen.setIcon(new
-        javax.swing.ImageIcon(getClass().getResource("/Imagenes/lock.png")));
-        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/images_1.png")).getImage());
-        this.setVisible(true);
-        
-        
-//        lblImagen.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-//        btnEnviar.setIcon(new ImageIcon("/Imagenes/next.png"));
-//        setIconImage(new Imagen("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\png\\16x16\\next.png"));
-        //        confi d = new confi(this);
-//        jButton1.addActionListener(new no());
-      
-//        this.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE  );//evita cerra jframe con ALT+C
+//              this.setDefaultCloseOperation( DO_NOTHING_ON_CLOSE  );//evita cerra jframe con ALT+C
 //        this.setExtendedState( MAXIMIZED_BOTH );//maximizado
 //        this.setAlwaysOnTop(true);//siempre al frente
 ////        nueva instancia de jBlocked pasando como parametros e este JFrame
 //        new jBloqueo( this ).block();
-//        txtUsuario.setEnabled(false);
-//        tpwPassword.setEnabled(false);
-//        btnEnviar.setEnabled(false);
-    }
 
-//    private void setImagen()
-//    {
-//        lbl.setIcon(ajustarImagen("/home/beastieux/MiImagen.png"));
-//        lbl.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
-//    }
-//
-   private void setImagen()
+            //Display the window.
+            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            pack();
+            setVisible(true);
+    }
+    
+
+    public static void  quitarPortal()
     {
-//        lbl.setIcon(ajustarImagen("x.png"));
-//        lbl.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        f.setVisible(false);
+        if(h!=null)
+        {
+        h.enviarMensajeNoVisible();
+        }
     }
 
-    private ImageIcon ajustarImagen(String ico)
+    public static void colocarPortal()
     {
-        ImageIcon tmpIconAux = new ImageIcon(ico);
-        //Escalar Imagen
-        ImageIcon tmpIcon = new ImageIcon(tmpIconAux.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT));
-        return tmpIcon;
+        f.setVisible(true);
     }
+    public static boolean visible()
+    {
+        return f.isVisible();
+    }
+    public void cambiarImagenY(int numero)
+    {
+        lblImagen.setLocation(478, numero);
+    }
+     public void cambiarImagenX(int numero)
+    {
 
-    /** This method is called from within the constructor to
-     * initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is
-     * always regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        lblUsuario = new javax.swing.JLabel();
-        lblContraseña = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        btnEnviar = new javax.swing.JButton();
-        tpwPassword = new javax.swing.JPasswordField();
-        lblImagen = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        lblUsuario.setText("Usuario");
-
-        lblContraseña.setText("Contraseña");
-
-        btnEnviar.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\next.png")); // NOI18N
-        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEnviarActionPerformed(evt);
+        lblImagen.setLocation(numero, 200);
+    }
+     public void cambiarImagenUnlock()
+     {
+//           lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\unlock.png"));
+            lblImagen.setIcon(new
+        javax.swing.ImageIcon(getClass().getResource("/Imagenes/unlock.png")));
+     }
+     public void cambiarImagenLock()
+     {
+//         lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\lock.png"));
+         lblImagen.setIcon(new
+        javax.swing.ImageIcon(getClass().getResource("/Imagenes/lock.png")));
+     }
+     public void mostrarMensajeIp()
+     {
+         JOptionPane.showInternalMessageDialog(rootPane,"socket cerrado o no encotro servidor","conexion Socket",JOptionPane.ERROR_MESSAGE);
+     }
+     public static void mostrarMensajeChat(String mensaje)
+     {
+            if(frameAux==null){
+            frameAux = new fram();
             }
-        });
+            JOptionPaneConTimeOut.visualizaDialogo(frameAux, mensaje,"mensaje chat" , 9000);
+         }
+     public static  void ApagarEquipo()
+     {
+         ejecucionexe("shutdown -s");
+     }
+     static  void ejecucionexe(String hilera){
+         try
+        {
+        Runtime.getRuntime().exec(hilera);
+        }
+         catch (SecurityException e)
+        {
+             e.fillInStackTrace();
+            // System.out.println("existe administrador de seguridad no puede crear subproceso");
+        }
+        catch (IOException e){
+            e.fillInStackTrace();
+            //System.out.println("error en el flujo de datos entrada o salida");
+        }
+        catch (NullPointerException e){
+            e.fillInStackTrace();
+            //System.out.println(" el comando de .exe es nulo");
+        }
+        catch(IllegalArgumentException e){
+            e.fillInStackTrace();
+            //System.out.println(" el comando de .exe esta vacio");
+        }
+    }
 
-        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(32, 32, 32)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(lblUsuario)
-                    .add(lblContraseña))
-                .add(28, 28, 28)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(btnEnviar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(tpwPassword)
-                            .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 294, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(64, 64, 64)
-                        .add(lblImagen)))
-                .addContainerGap(150, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(layout.createSequentialGroup()
-                        .add(57, 57, 57)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(lblUsuario)
-                            .add(txtUsuario, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(50, 50, 50)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(lblContraseña)
-                            .add(tpwPassword, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(27, 27, 27)
-                        .add(btnEnviar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 38, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(layout.createSequentialGroup()
-                        .add(67, 67, 67)
-                        .add(lblImagen)))
-                .addContainerGap(170, Short.MAX_VALUE))
-        );
+    public void actionPerformed(ActionEvent e) {
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+        if(e.getActionCommand().equalsIgnoreCase("btnEnviar")){
+        System.out.println("entro aqui");
 
-    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-        // TODO add your handling code here:
-
-         // TODO add your handling code here:
-
-        String user = txtUsuario.getText();
-        String pass = new String(tpwPassword.getPassword());
+         String user = txtUsuario.getText();
+        String pass = new String(ptwPassword.getPassword());
 
         if(user.equalsIgnoreCase("ocamilo.lopera") && pass.equalsIgnoreCase("1152439790"))
         {
             txtUsuario.setText("");
-            tpwPassword.setText("");
+            ptwPassword.setText("");
             LanzadorImagen l = new LanzadorImagen(1,f);
 //            h.enviarMensajeNoVisible();
         }else if(user.equalsIgnoreCase("yamit.cardozo") && pass.equalsIgnoreCase("1038098543"))
         {
              txtUsuario.setText("");
-            tpwPassword.setText("");
+            ptwPassword.setText("");
             LanzadorImagen l = new LanzadorImagen(1,f);
         }
         else
@@ -231,67 +320,35 @@ public class VentanaPrincipal extends javax.swing.JFrame{
 //                    JOptionPane.showMessageDialog(this, "usuario no existe");
 //                }
 //        }
-        
-    }//GEN-LAST:event_btnEnviarActionPerformed
-
-       public static void  quitarPortal()
-    {
-        f.setVisible(false);
-        h.enviarMensajeNoVisible();
+        }else
+        {
+            System.out.println("entro en btnRegistro");
+                Point p = lblImagen.getLocation();
+                int x = p.x;
+                int y = p.y;
+        }
     }
 
-    public static void colocarPortal()
-    {
-        f.setVisible(true);
-    }
-    public static boolean visible()
-    {
-        return f.isVisible();
-    }
-    public void cambiarImagenY(int numero)
-    {
-        lblImagen.setLocation(478, numero);
-    }
-     public void cambiarImagenX(int numero)
-    {
+    public static void main(String[] args){
 
-        lblImagen.setLocation(numero, 200);
-    }
-     public void cambiarImagenUnlock()
-     {
-//           lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\unlock.png"));
-            lblImagen.setIcon(new
-        javax.swing.ImageIcon(getClass().getResource("/Imagenes/unlock.png")));
-     }
-     public void cambiarImagenLock()
-     {
-//         lblImagen.setIcon(new javax.swing.ImageIcon("C:\\Users\\Elelegido\\Documents\\NetBeansProjects\\6.5\\RepositorioControlUsuario\\imagenes\\lock.png"));
-         lblImagen.setIcon(new
-        javax.swing.ImageIcon(getClass().getResource("/Imagenes/lock.png")));
-     }
-     public void mostrarMensajeIp()
-     {
-         JOptionPane.showInternalMessageDialog(rootPane,"socket cerrado o no encotro servidor","conexion Socket",JOptionPane.ERROR_MESSAGE);
-     }
-     /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        try
+             try
             {
-//            JFrame.setDefaultLookAndFeelDecorated(true);
-//            SkinLookAndFeel.setSkin(SkinLookAndFeel.loadThemePack("temas/skins/silverLunaXPthemepack.zip"));
+                 JFrame.setDefaultLookAndFeelDecorated(true);
             UIManager.setLookAndFeel(new SubstanceMagmaLookAndFeel());
 //            SubstanceLookAndFeel.setSkin(new EmeraldDuskSkin());
             }
             catch (Exception e)
             {
-                JOptionPane.showMessageDialog(null, e);
-            }         
+                e.printStackTrace();
+            }
 
-        f = new VentanaPrincipal();
 
-        int i=0;
+//            Servidor s = new Servidor();
+//            s.start();
+
+             f = new VentanaPrincipal();
+
+            int i=0;
         do
         {
           h = new hilosEjecucion(f);
@@ -305,18 +362,6 @@ public class VentanaPrincipal extends javax.swing.JFrame{
         }
         }
         while(i==0);
-        
-    }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEnviar;
-    private javax.swing.JLabel lblContraseña;
-    private javax.swing.JLabel lblImagen;
-    private javax.swing.JLabel lblUsuario;
-    private javax.swing.JPasswordField tpwPassword;
-    private javax.swing.JTextField txtUsuario;
-    // End of variables declaration//GEN-END:variables
-
-
-
+           }
 }

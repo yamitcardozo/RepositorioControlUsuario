@@ -55,6 +55,8 @@ public class hilosEjecucion extends Thread  {
     private JTextArea mensajeChat;
 
     private int creado;
+
+    private boolean chat;
 //    /**
 //     *  parametro para ingreso usuario
 //     */
@@ -109,6 +111,7 @@ public class hilosEjecucion extends Thread  {
         {
             try {
                 log.info("asignacion de IP");
+//                sk = new Socket("192.168.37.149", 10578);
 //                sk = new Socket("192.168.37.145", 10578);
                 sk = new Socket("localhost", 10578);
                 log.info("acepto la IP suministrada");
@@ -156,7 +159,7 @@ public class hilosEjecucion extends Thread  {
 // hay que quitar esto
         try
         {
-         dos.writeUTF("20");
+         dos.writeUTF("10");
 
         }catch(Exception ex)
         {
@@ -281,6 +284,15 @@ public class hilosEjecucion extends Thread  {
                 {
                     System.out.println("llego mensaje novisible");
                     continue;
+                }else if(mensaje.equalsIgnoreCase("okchat"))
+                {
+                    chat = true;
+                    continue;
+                }else if(chat)
+                {
+                    VentanaPrincipal.mostrarMensajeChat(mensaje);
+                    chat = false;
+                    continue;
                 }
                 else
                 if(mensaje.equalsIgnoreCase("abrirPortal"))
@@ -293,6 +305,10 @@ public class hilosEjecucion extends Thread  {
                         dos.writeUTF("okcerrarPortal");
                     VentanaPrincipal.colocarPortal();
                 }
+                   else if(mensaje.equalsIgnoreCase("apagar"))
+                   {
+                        VentanaPrincipal.ApagarEquipo();
+                   }
                    else
                if(mensaje.equalsIgnoreCase("ok1038098"))
                 {
